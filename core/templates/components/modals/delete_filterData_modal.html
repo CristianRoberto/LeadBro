@@ -1,0 +1,22 @@
+<div class="modal fade" tabindex="-1" id="delete-customer-{{ customer.0 }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Eliminar compañía</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Estás seguro que deseas eliminar la compañía <b>{{ customer.1 }}</b>?<br>
+                Se borrarán todas las campañas relacionadas a este compañía
+                <form method="post" id="delete-customer{{ customer.0 }}-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ customer.0 }}">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary bg-primary" form="delete-customer{{ customer.0 }}-form" name="delete-customer">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>

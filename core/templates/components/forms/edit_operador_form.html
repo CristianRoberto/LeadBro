@@ -1,0 +1,74 @@
+<form method="post" id="{{ form_id }}">
+    {% csrf_token %}
+    
+    <div class="row mb-3"> 
+        <div class="col">
+            <label for="operador-nombres" class="form-label text-bold"
+                >Nombres</label
+            >
+            {{ editOperador.nombres }} 
+            {% for error in editOperador.nombres.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <label for="operador-apellidos" class="form-label text-bold"
+                >Apellidos</label
+            >
+            {{ editOperador.apellidos }} 
+            {% for error in editOperador.apellidos.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row mb-3"> 
+        <div class="col">
+            <label for="operador-cedula" class="form-label text-bold">Cedula</label>
+            {{ editOperador.cedula }} 
+            {% for error in editOperador.cedula.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <label for="operador-codigoDinomi" class="form-label text-bold"
+                >Codigo Dinomi</label
+            >
+            {{ editOperador.codigoDinomi }} 
+            {% for error in editOperador.codigoDinomi.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row mb-3"> 
+        <div class="col">
+            <label for="operador-lider" class="form-label text-bold"
+                >Lider</label
+            >
+            {{ editOperador.lideres }} 
+            {% for error in editOperador.lideres.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}                  
+        </div>
+    </div>  
+    <div>{{ editOperador.id }}</div>    
+</form>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const liderSelector = document.getElementById('operador-lider');
+        
+        const defaultOption = new Option('Seleccione un líder', '', false, false);
+        defaultOption.disabled = true;
+        
+        // Insertar la opción al inicio del select
+        if (liderSelector.firstChild) {
+            liderSelector.insertBefore(defaultOption, liderSelector.firstChild);
+        } else {
+            liderSelector.appendChild(defaultOption);
+        }
+
+    });
+</script>

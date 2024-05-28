@@ -1,0 +1,495 @@
+<form method="post" id="{{ form_id }}">
+    {% csrf_token %}
+
+    <div class="form-row">
+        <!-- Columna Izquierda -->
+        <div class="form-column">
+            <!-- NOMBRE -->
+            <div class="mb-3">
+                <label for="lead-nombre" class="form-label text-bold">Nombres</label>
+                {{ leads_form.nombre }}
+                {% for error in leads_form.nombre.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- CEDULA -->
+            <div class="mb-3">
+                <label for="lead-cedula" class="form-label text-bold">Cédula</label>
+                {{ leads_form.cedula }}
+                {% for error in leads_form.cedula.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            
+            <!-- CELULAR -->
+            <div class="mb-3">
+                <label for="lead-celular" class="form-label text-bold">Celular</label>
+                {{ leads_form.celular }}
+                {% for error in leads_form.celular.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- CORREO -->
+            <div class="mb-3">
+                <label for="lead-correo" class="form-label text-bold">Correo</label>
+                {{ leads_form.correo }}
+                {% for error in leads_form.correo.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- OPERADOR -->
+            <div class="mb-3">
+                <label for="lead-operador" class="form-label text-bold">Operador</label>
+                {{ leads_form.operador }}
+                {% for error in leads_form.operador.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <!-- compania -->
+            {{ leads_form.compania }}
+
+
+            <!--  **********************   PYCCA   ********************** -->
+            {% if form_id == "PYCCA" %}
+            <!-- CAMPAÑA -->
+            <div class="mb-3">
+                <label for="lead-campana" class="form-label text-bold">Campaña</label>
+                {{ leads_form.campana }}
+                {% for error in leads_form.campana.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- TIPO DE VENTA -->
+            <div class="mb-3">
+                <label for="lead-tipoVenta" class="form-label text-bold">Tipo de Venta</label>
+                {{ leads_form.tipo_venta }}
+                {% for error in leads_form.tipo_venta.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- PRODUCTO -->
+            <div class="mb-3">
+                <label for="lead-producto" class="form-label text-bold">Producto</label>
+                {{ leads_form.producto }}
+            </div>
+            
+            
+            {% endif %}
+
+
+            <!--  **********************   LAYCA   ********************** -->
+            {% if form_id == "Laica" %}
+            <!-- campana -->
+            <div class="mb-3">
+                <label for="lead-campana" class="form-label text-bold">Campana</label>
+                {{ leads_form.campana }}
+                {% for error in leads_form.campana.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- FACULTAD -->
+            <div class="mb-3">
+                <label for="lead-facultad" class="form-label text-bold">Facultad</label>
+                {{ leads_form.facultad }}
+                {% for error in leads_form.facultad.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- CARRERA -->
+            <div class="mb-3">
+                <label for="lead-carrera" class="form-label text-bold">Carrera</label>
+                {{ leads_form.carrera }}
+                {% for error in leads_form.carrera.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!--  **********************   CNT   ********************** -->
+            {% if form_id == "CNT" %}
+            <!-- CONTRATO -->
+            <div class="mb-3">
+                <label for="lead-contrato" class="form-label text-bold">Contrato</label>
+                {{ leads_form.contrato }}
+                {% for error in leads_form.contrato.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- CAMPAÑA -->
+            <div class="mb-3">
+                <label for="lead-campana" class="form-label
+                text-bold">Subcampañas</label>
+                {{ leads_form.subcampana }}
+                {% for error in leads_form.subcampana.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- SUPERVISOR -->
+            <div class="mb-3">
+                <label for="lead-supervisor" class="form-label text-bold">Supervisor</label>
+                {{ leads_form.supervisor }}
+                {% for error in leads_form.supervisor.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- CBM -->
+            <div class="mb-3">
+                <label for="lead-cbm" class="form-label text-bold">CBM</label>
+                <div class="input-group">
+                    {{ leads_form.cbm_entero }}
+                    <p class="mx-2 mb-0 align-items-end d-flex">,</p>
+                    {{ leads_form.cbm_decimal }}
+                </div>
+                {% for error in leads_form.cbm_entero.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+                {% for error in leads_form.cbm_decimal.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- SIM CARD -->
+            <div class="mb-3">
+                <label for="lead-simcard" class="form-label
+                text-bold">Sim Card</label>
+                {{ leads_form.simcard }}
+                {% for error in leads_form.simcard.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- TIPO -->
+            <div class="mb-3">
+                <label for="lead-tipo" class="form-label text-bold">Tipo</label>
+                {{ leads_form.tipo }}
+                {% for error in leads_form.tipo.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- SECUENCIA SRE -->
+            <div class="mb-3">
+                <label for="lead-secuencia_sre" class="form-label text-bold">Secuencia SRE</label>
+                {{ leads_form.secuencia_sre }}
+                {% for error in leads_form.secuencia_sre.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- ENTREGADO A CNT -->
+            <div class="mb-3">
+                <label for="lead-entregado_cnt" class="form-label text-bold">Entregado a CNT</label>
+                {{ leads_form.entregado_cnt }}
+                {% for error in leads_form.entregado_cnt.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {% endif %}
+
+            <!--  **********************   ZURICH   ********************** -->
+            {% if form_id == "Zurich" %}
+            <div class="mb-3">
+                <label for="lead-asegurado" class="form-label text-bold">Asegurado</label>
+                {{ leads_form.asegurado }}
+                {% for error in leads_form.asegurado.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="lead-nacimiento" class="form-label text-bold">Fecha de nacimiento</label>
+                {{ leads_form.fecha_nacimiento }}
+            </div>
+            <div class="mb-3">
+                <label for="lead-actEconomica" class="form-label text-bold">Actividad economica</label>
+                {{ leads_form.actEconomica }}
+            </div>
+            <div class="mb-3">
+                <label for="lead-codigoAsesor" class="form-label text-bold">Código de asesor</label>
+                {{ leads_form.codigoAsesor }}
+            </div>
+
+            <div class="mb-3">
+                <label for="lead-plan" class="form-label text-bold">Plan</label>
+                {{ leads_form.plan }}
+            </div>
+
+            <div class="mb-3">
+                <label for="lead-valorAegurado" class="form-label text-bold">Valor asegurado</label>
+                {{ leads_form.valorAegurado }}
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <!-- Columna Derecha -->
+        <div class="form-column">
+            <!-- APELLIDO -->
+            <div class="mb-3">
+                <label for="lead-apellido" class="form-label text-bold">Apellidos</label>
+                {{ leads_form.apellido }}
+                {% for error in leads_form.apellido.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- TELEFONO -->
+            <div class="mb-3">
+                <label for="lead-telefono" class="form-label text-bold">Teléfono</label>
+                {{ leads_form.telefono }}
+                {% for error in leads_form.telefono.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>           
+
+            <!-- VALOR FACTURADO -->
+            <div class="mb-3">
+                <label for="lead-valor-facturado" class="form-label text-bold">Valor Facturado</label>
+                <div class="input-group">
+                    {{ leads_form.valor_facturado_entero }}
+                    <p class="mx-2 mb-0 align-items-end d-flex">,</p>
+                    {{ leads_form.valor_facturado_decimal }}
+                </div>
+                {% for error in leads_form.valor_facturado_entero.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+                {% for error in leads_form.valor_facturado_decimal.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Iva -->
+            <div class="mb-3">
+                <label for="lead-iva" class="form-label text-bold">Iva</label>
+                {{ leads_form.Iva }}
+                {% for error in leads_form.Iva.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+
+            <!--  **********************   PYCCA   ********************** -->
+
+            {% if form_id == "PYCCA" %}
+            <!-- CIUDAD -->
+            <div class="mb-3">
+                <label for="lead-ciudad" class="form-label text-bold">Ciudad</label>
+                {{ leads_form.ciudad }}
+                {% for error in leads_form.ciudad.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- subcampana -->
+            <div class="mb-3">
+                <label for="lead-subcampana" class="form-label text-bold">Subcampana</label>
+                {{ leads_form.subcampana }}
+                {% for error in leads_form.subcampana.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- ACEPTA SEGURO -->
+            <div class="mb-3">
+                <label for="lead-seguro" class="form-label text-bold">Acepta Seguro</label>
+                {{ leads_form.acepta_seguro }}
+                {% for error in leads_form.acepta_seguro.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+            <!--  **********************   LAYCA   ********************** -->
+
+            {% if form_id == "Laica" %}
+            <!-- subcampana -->
+            <div class="mb-3">
+                <label for="lead-subcampana" class="form-label text-bold">Subcampana</label>
+                {{ leads_form.subcampana }}
+                {% for error in leads_form.subcampana.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- FECHA DE PRIMER CONTACTO -->
+            <div class="mb-3">
+                <label for="lead-fecha_1stContact" class="form-label text-bold">Fecha de Primer Contacto</label>
+                {{ leads_form.fecha_1stContact }}
+                {% for error in leads_form.fecha_1stContact.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- MODALIDAD -->
+            <div class="mb-3">
+                <label for="lead-modalidad" class="form-label text-bold">Modalidad</label>
+                {{ leads_form.modalidad }}
+                {% for error in leads_form.modalidad.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+            <!--  **********************   CNT   ********************** -->
+
+            {% if form_id == "CNT" %}
+            <!-- ESTADO -->
+            <div class="mb-3">
+                <label for="lead-estado" class="form-label text-bold">Estado</label>
+                {{ leads_form.estado }}
+            </div>
+
+            <!-- PLAN -->
+            <div class="mb-3">
+                <label for="lead-plan" class="form-label text-bold">Plan</label>
+                {{ leads_form.plan }}
+            </div>
+
+            <!-- FECHA ACTIVACION -->
+            <div class="mb-3">
+                <label for="lead-fecha_activacion" class="form-label text-bold">Fecha de Activación</label>
+                {{ leads_form.fecha_activacion }}
+            </div>
+            
+            <!-- TB2 -->
+            <div class="mb-3">
+                <label for="lead-tb2" class="form-label text-bold">TB2</label>
+                <div class="input-group">
+                    {{ leads_form.tb2_entero }}
+                    <p class="mx-2 mb-0 align-items-end d-flex">,</p>
+                    {{ leads_form.tb2_decimal }}
+                </div>
+            </div>
+            
+            <!-- IMEI -->
+            <div class="mb-3">
+                <label for="lead-imei" class="form-label text-bold">IMEI</label>
+                {{ leads_form.imei }}
+            </div>
+
+            <!-- CICLO DE FACTURACION -->
+            <div class="mb-3">
+                <label for="lead-ciclo_facturacion" class="form-label text-bold">Ciclo de Facturación</label>
+                {{ leads_form.ciclo_facturacion }}
+            </div>
+
+            <!-- ESTADO DE LEGEALIZACION -->   
+            <div class="mb-3">
+                <label for="lead-legalizacionCnt" class="form-label text-bold">Estado de Legalización</label>
+                {{ leads_form.legalizacion_cnt }}
+            </div>
+
+            <!-- EQUIPO -->
+            <div class="mb-3">
+                <label for="lead-equipo" class="form-label text-bold">Equipo</label>
+                {{ leads_form.equipo }}
+            </div>
+            {% endif %}
+
+            <!--  **********************   ZURICH   ********************** -->
+            {% if form_id == "Zurich" %}
+            <div class="mb-3">
+                <label for="lead-genero" class="form-label text-bold">Genero</label>
+                {{ leads_form.genero }}
+            </div>
+
+            <div class="mb-3">
+                <label for="lead-ciudad" class="form-label text-bold">Ciudad</label>
+                {{ leads_form.ciudad }}
+            </div>
+
+            <div class="mb-3">
+                <label for="lead-direccion" class="form-label text-bold">Direccion</label>
+                {{ leads_form.direccion }}
+            </div>
+            <div class="mb-3">
+                <label for="lead-producto" class="form-label text-bold">Producto</label>
+                {{ leads_form.producto }}
+            </div>
+
+            <div class="mb-3">
+                <label for="lead-vencimiento" class="form-label text-bold">Fecha de vencimiento</label>
+                {{ leads_form.fecha_vencimiento }}
+            </div>         
+            <div class="mb-3">
+                <label for="lead-valorNeto" class="form-label text-bold">Valor neto</label>
+                {{ leads_form.valorNeto }}
+            </div>
+
+
+            {% endif %}
+            
+            
+        </div>
+    </div>
+
+    {% if form_id == "PYCCA" %}
+    <!-- DESCRIPCION -->
+    <div class="mb-3_descripcion">
+        <label for="lead-descripcion" class="form-label text-bold">Descripción</label>
+        {{ leads_form.descripcion }}
+        {% for error in leads_form.descripcion.errors %}
+            <p class="help is-danger">{{ error }}</p>
+        {% endfor %}
+    </div>   
+    {% endif %}    
+    
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const campanaSelector = document.getElementById('lead-campana');
+        const subcampanaSelector = document.getElementById('lead-subcampana');
+
+        campanaSelector.addEventListener('change', function () {
+            const campanaId = this.value;
+            fetch(`${window.location.origin}/api/?campana=${campanaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    subcampanaSelector.innerHTML = '';
+                    data.forEach(sub => {
+                        const option = new Option(sub.nombre, sub.id);
+                        subcampanaSelector.add(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching subcampanas:', error));
+        });
+
+        function loadSubcampanas () {
+            
+            const campanaId = campanaSelector.value;
+            console.log(campanaId);
+            fetch(`${window.location.origin}/api/?campana=${campanaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    subcampanaSelector.innerHTML = '';
+                    console.log(data);
+                    data.forEach(sub => {
+                        const option = new Option(sub.nombre, sub.id);
+                        subcampanaSelector.add(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching subcampanas:', error));
+        };
+
+        loadSubcampanas();
+    });
+</script>
+
+

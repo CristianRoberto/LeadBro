@@ -1,0 +1,122 @@
+<style>
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Estilos agregados para manejar el desbordamiento con barra de desplazamiento */
+    .table-container {
+        max-width: 100%; /* o cualquier otro valor según tus necesidades */
+        /*max-height: 1000px;  o cualquier otro valor según tus necesidades */
+        overflow-x: auto;
+    }
+</style>
+
+<div class="table-container"> <!-- Contenedor agregado -->
+    <table class="row-border hover" id="datatable">
+        <thead>
+            <tr class="bg-primary text-white">
+                <th scope="col" style="width: 5%;">#</th>
+                <th scope="col" style="width: 10%;">Cedula</th>
+                <th scope="col" style="width: 10%;">Nombres cliente</th>
+                <th scope="col" style="width: 10%;">Año de ultima transacción</th>
+                <th scope="col" style="width: 10%;">Cupo disponible</th>
+                <th scope="col" style="width: 10%;">Ciudad</th>
+                <th scope="col" style="width: 10%;">Celular</th>
+                <th scope="col" style="width: 10%;">Telefono</th>
+                <th scope="col" style="width: 10%;">Correo</th>
+                {%if frecuenciaVentas %}  
+                <th scope="col" style="width: 10%;">Frecuencia</th>
+                {% endif %}
+                <!--
+                <th scope="col" style="width: 10%;">Acciones</th>
+                --> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente, cliente_form in filter_data_info %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td class="text-normal">{{ cliente.1 }}</td>
+                <td class="text-normal">{{ cliente.2 }} {{ cliente.3 }}</td>
+                <td class="text-normal">
+                    {%if cliente.4 %}  
+                    {{ cliente.4 }}
+                    {% endif %}
+                </td>
+                <td class="text-normal">{{ cliente.5 }}</td>
+                <td class="text-normal">{{ cliente.6 }}</td>         
+                
+
+                {%if frecuenciaVentas %}
+                <td class="text-normal">
+                    {%if cliente.8 %}  
+                    {{ cliente.8 }}
+                    {% endif %}
+                </td>
+                
+                <td class="text-normal">
+                    {%if cliente.9 %}  
+                    {{ cliente.9 }}
+                    {% endif %}
+                </td>  
+                <td class="text-normal">
+                    {{ cliente.10 }}
+                </td>                
+                <td class="text-normal">
+                    {%if cliente.7 %}  
+                    {{ cliente.7 }}
+                    {% endif %}
+                </td>
+                {% else %}                                 
+                <td class="text-normal">
+                    {%if cliente.7 %}  
+                    {{ cliente.7 }}
+                    {% endif %}
+                </td>
+                <td class="text-normal">
+                    {%if cliente.8 %}  
+                    {{ cliente.8 }}
+                    {% endif %}
+                </td>                
+                <td class="text-normal">
+                    {%if cliente.9 %}  
+                    {{ cliente.9 }}
+                    {% endif %}
+                </td> 
+                {% endif %}
+                <!--                
+                <td class="text-normal">
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="action-button" title="Editar compañía" data-bs-toggle="modal"
+                                data-bs-target="#edit-customer-{{ cliente.0 }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd"
+                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                            </button>
+                        </div>
+                            {% include 'components/modals/edit_customer_modal.html' with customer_form=customer_form form_id=customer.0 %}
+                        <div class="col-6">
+                            <button class="action-button" title="Eliminar compañía" data-bs-toggle="modal"
+                                data-bs-target="#delete-customer-{{ customer.0 }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                    <path fill-rule="evenodd"
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2.5h11V3h-11z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </td>
+                -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

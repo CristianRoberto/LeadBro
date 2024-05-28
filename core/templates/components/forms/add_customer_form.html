@@ -1,0 +1,22 @@
+<form method="post" id="{{ form_id }}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="customer-name" class="form-label text-normal">Nombre</label>
+        {{ customer.name }}
+    </div>
+    <div class="mb-3">
+        <label for="contact-name" class="form-label text-normal">Nombre de contacto</label>
+        {{ customer.contact_name }}
+    </div>
+    <div class="mb-3">
+        <label for="contact-phone" class="form-label text-normal">Teléfono de contacto</label>
+        {{ customer.contact_phone }}
+    </div>
+    <div class="mb-3">
+        <label for="contact-email" class="form-label text-normal">Correo de contacto</label>
+        {{ customer.contact_email }}
+    </div>
+    <div>
+        {{ customer.id }}
+    </div>
+</form>

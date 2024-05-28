@@ -1,0 +1,110 @@
+<form method="post" id="{{ form_id }}">
+    {% csrf_token %}
+
+    <h5>Datos generales</h5>
+
+    <div class="mb-3 text-black">
+        <label for="dinomi-startDate" class="form-label text-bold"
+            >* Fecha inicio</label
+        >
+        {{ dinomi_form.startDate }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="dinomi-endDate" class="form-label text-bold"
+            >* Fecha fin</label
+        >
+        {{ dinomi_form.endDate }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="dinomi-tipo" class="form-label text-bold">* Tipo</label>
+        {{ dinomi_form.tipo }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="dinomi-nombre" class="form-label text-bold">* Nombre</label>
+        {{ dinomi_form.nombre_dinomi }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="dinomi-equipo" class="form-label text-bold">* Equipo</label>
+        {{ dinomi_form.equipo_dinomi }}
+    </div>
+
+    <h5>Atributos</h5>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_nombre_1" class="form-label text-bold"
+            >Atributo 1</label
+        >
+        {{ dinomi_form.atributo_nombre_1 }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_tipo_1" class="form-label text-bold"
+            >Tipo 1</label
+        >
+        {{ dinomi_form.atributo_tipo_1 }}
+    </div>
+
+
+
+    <div class="mb-3 text-black">
+        <label for="atributo_nombre_2" class="form-label text-bold"
+            >Atributo 2</label
+        >
+        {{ dinomi_form.atributo_nombre_2 }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_tipo_2" class="form-label text-bold"
+            >Tipo 2</label
+        >
+        {{ dinomi_form.atributo_tipo_2 }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_nombre_3" class="form-label text-bold"
+            >Atributo 3</label
+        >
+        {{ dinomi_form.atributo_nombre_3 }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_tipo_3" class="form-label text-bold"
+            >Tipo 3</label
+        >
+        {{ dinomi_form.atributo_tipo_3 }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_nombre_4" class="form-label text-bold"
+            >Atributo 4</label
+        >
+        {{ dinomi_form.atributo_nombre_4 }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_tipo_4" class="form-label text-bold"
+            >Tipo 4</label
+        >
+        {{ dinomi_form.atributo_tipo_4 }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_nombre_5" class="form-label text-bold"
+            >Atributo 5</label
+        >
+        {{ dinomi_form.atributo_nombre_5 }}
+    </div>
+
+    <div class="mb-3 text-black">
+        <label for="atributo_tipo_5" class="form-label text-bold"
+            >Tipo 5</label
+        >
+        {{ dinomi_form.atributo_tipo_5 }}
+    </div>
+
+
+</form>

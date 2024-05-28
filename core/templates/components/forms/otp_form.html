@@ -1,0 +1,10 @@
+<form id="{{ form_id }}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ otp_form.otp_code.label_tag }}
+        {{ otp_form.otp_code }}
+    </div>    
+    <div >
+        {{ otp_form.email_notification }}
+    </div>             
+</form>

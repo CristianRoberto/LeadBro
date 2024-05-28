@@ -1,0 +1,88 @@
+
+<!-- Modal -->
+<!-- <div class="modal fade" tabindex="-1" id="edit-client-modal"> -->
+<!-- <div class="modal fade" tabindex="-1" id="edit-campaign-{{ data_client.0 }}"> -->
+    <!-- <div class="modal fade" id="edit-campaign-{{ form_id }}" tabindex="-1" aria-labelledby="editCampaignLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Editar Cliente</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'components/forms/update_cliente_form.html' with campaign=campaign_form form_id=form_id %}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary bg-primary" form="{{ form_id }}" name="update-campaign-data">Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- 
+<script>
+   // Función para abrir el modal y pasar los datos al formulario
+function openEditModal(idCliente, nombres, apellidos, cedula, fechaNacimiento, edad, genero, ciudad) {
+    // Mostrar los datos en el formulario del modal
+    document.getElementById('id_cliente').value = idCliente;
+    document.getElementById('nombres').value = nombres;
+    document.getElementById('apellidos').value = apellidos;
+    document.getElementById('cedula').value = cedula;
+    document.getElementById('fecha_nacimiento').value = fechaNacimiento;
+    document.getElementById('edad').value = edad;
+    document.getElementById('genero').value = genero;
+    document.getElementById('ciudad').value = ciudad;
+    // document.getElementById('celular').value = celular;
+
+    // Abrir el modal
+    var myModal = new bootstrap.Modal(document.getElementById('edit-client-modal'));
+    myModal.show();
+}
+
+// Event listener para el botón de editar cliente
+document.addEventListener('DOMContentLoaded', function () {
+    var editButtons = document.querySelectorAll('.edit-client-button');
+    editButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            // Obtener los datos del botón
+            var idCliente = button.getAttribute('data-id');
+            var nombres = button.getAttribute('data-nombres');
+            var apellidos = button.getAttribute('data-apellidos');
+            var cedula = button.getAttribute('data-cedula');
+            var fechaNacimiento = button.getAttribute('data-fecha-nacimiento');
+            var edad = button.getAttribute('data-edad');
+            var genero = button.getAttribute('data-genero');
+            var ciudad = button.getAttribute('data-ciudad');
+            // var celular = button.getAttribute('data-celular');
+
+            // Abrir el modal y pasar los datos
+            openEditModal(idCliente, nombres, apellidos, cedula, fechaNacimiento, edad, genero, ciudad);
+        });
+    });
+});
+
+</script> -->
+
+
+
+
+
+<div class="modal fade" id="edit-campaign-{{ form_id }}" tabindex="-1" aria-labelledby="editCampaignLabel-{{ form_id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="editCampaignLabel-{{ form_id }}">Editar Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'components/forms/update_cliente_form.html' with campaign=campaign_form form_id=form_id %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary bg-primary" form="{{ form_id }}" name="update-campaign-data">Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,45 @@
+{% extends 'components/sidebar.html' %}
+
+{% load static %}
+
+{% block title %}
+sincronizar archivo de Google Drive | Logi Data Master
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block sb_content %}
+<h5 class="my-4">Agregar Hoja de cálculo</h5>
+{% include 'components/forms/add_google_sheets_file_form.html' with spreadsheet_form=spreadsheet_form form_id='sync-file-form' %}
+<button type="submit" name="add_spreadsheet" class="btn btn-outline btn-primary bg-primary border border-white" form="sync-file-form">
+    Procesar Archivo
+</button>
+{% endblock %}
+
+{% block dashcontent %}
+<div class="row bg-white shadow-sm justify-content-center p-lg-5 p-md-4 p-sm-3 pt-4">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="col-6">
+            <h1 class="text-left mb-3 fs-3">Sincronizar archivo de Google Drive</h1>
+        </div>
+        {% if columns_info %}
+        {% include 'components/forms/select_columns_from_sheet_form.html' with form_id='match-columns-form' %}
+        {% else %}
+        <div>
+            {% include 'components/tables/spreadsheets_table.html' %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+{% include 'components/tables/datatable_scripts.html' %}
+{% endblock %}

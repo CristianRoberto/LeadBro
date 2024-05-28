@@ -1,0 +1,146 @@
+{% load static %}
+<div
+  class="row bg-white shadow-sm justify-content-center p-lg-5 p-md-4 p-sm-3 pt-4"
+>
+
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="">
+      <h1 class="text-left mb-3 fs-3">{{ page_title }}</h1>
+      {% if upload_err_msg %}
+      <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <div class="mx-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            fill="currentColor"
+            class="bi bi-exclamation-triangle-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+            />
+          </svg>
+        </div>
+        <div class="text-normal">{{ upload_err_msg }}</div>
+      </div>
+      {% endif %} 
+	  
+	  {% if columns_info %}
+      <div class="container">
+        <div class="mt-5 mb-3">
+          <h3 class="text-normal">Conectar campos con la base de datos</h3>
+          <p class="text-normal">
+            Elija el campo que corresponde con el nombre de la columna de su
+            archivo de Excel. Por defecto los campos no se encuentran
+            seleccionados. Los campos marcados como "No importar" no se subirán
+            a la base de datos.
+            <br /><b>Importante:</b> El campo de cédula es obligatorio.
+          </p>
+        </div>
+      </div>
+      {% include 'components/forms/upload_file_form/select_columns_form.html'   with form_id='select-columns-form' %}
+      <div class="container mb-5">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4 m-4">
+          <button
+            type="submit"
+            name="select-columns"
+            class="btn btn-outline btn-primary bg-primary border border-white py-3 px-4 rounded-pill"
+            form="select-columns-form"
+          >
+            <span id="button-spinner-upload" style="display: none" class="justify-content-center align-items-center">
+              <div class="spinner-border text-light" role="status">   </div>
+              <span class="ml-4" >Loading...</span>
+            </span>
+            <span id="button-upload-cliente">Subir columnas</span>
+          </button>
+        </div>
+      </div>
+      {% endif %} 
+      
+      {% if file_uploaded %}
+      <div id="file-upload-status" data-file-uploaded="{% if file_uploaded %}true{% else %}false{% endif %}" class="none">
+        <!-- Contenido del div -->
+      </div>
+      <div class="text-center mt-5">
+        <img class="check-image" src="{% static 'imgs/check.png' %}" />
+        <div class="mt-4">
+          <h3 class="text-normal">Subida de archivo exitosa</h3>
+          <p class="text-normal fs-6">
+            Podrá visualizar toda la información de manera gráfica dentro de un
+            momento <br />
+            en la página de
+            <a href="{% url 'reportes' %}" target="_blank">Reportes</a>
+          </p>
+          <h5 class="text-normal mt-4"><b>Informe:</b></h5>
+        </div>
+      </div>
+      <div id="uploading-report-content">
+        {% if leads_metrics %}
+        <div class="text-center">
+          <p class="text-normal">
+            Se han agregado
+            <span class="fs-5"><b>{{ leads_metrics }}</b></span> leads a la base
+            de datos.
+          </p>
+        </div>
+        {% endif %}
+        <div class="table-report">
+          <div class="row">
+            <div class="col text-center text-normal">
+              <b>Clientes creados:</b> {{ client_metrics.records.inserted }}
+            </div>
+            <div class="col text-center text-normal">
+              <b>Clientes actualizados:</b> {{ client_metrics.records.updated }}
+            </div>
+            <div class="col text-center text-normal">
+              <b>Clientes con errores:</b> {{ client_metrics.records.errores }}
+            </div>
+          </div>
+        </div>
+        {% if client_metrics.logs %}
+        <div class="mt-5">
+          <ol class="list-group list-group-numbered">
+            {% for log in client_metrics.logs %}
+            <li class="list-group-item fw-normal">{{log}}</li>
+            {% endfor %}
+          </ol>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% block scripts %}
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Verifica si el archivo ha sido cargado
+    var fileUploadStatus = document.getElementById('file-upload-status');
+    console.log(fileUploadStatus)
+    var fileUploaded = fileUploadStatus.dataset.fileUploaded === 'true';
+
+    // Función para cambiar el estado de los elementos basado en fileUploaded
+    function cambiarEstadoElementos() {
+      if (fileUploaded) {
+        // Cambia el estado del div cuando file_uploaded es True
+        document.getElementById('button-upload-cliente').style.display = 'block';
+        document.getElementById('button-spinner-upload').style.display = 'none';
+      }
+    }
+
+    // Llama a la función para cambiar el estado de los elementos
+    cambiarEstadoElementos();
+  });
+
+  // Agrega un evento de escucha al formulario para detectar su envío
+  document.getElementById('select-columns-form').addEventListener('submit', function() {
+        // Oculta el texto del botón y muestra el spinner
+        document.getElementById('button-upload-cliente').style.display = 'none';
+        document.getElementById('button-spinner-upload').style.display = 'flex';
+    });
+  
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+-------Proyecto LeadBro----------
+Anaconda Navigator =  crear, clonar y eliminar entornos de manera sencilla.
+Django = framework de desarrollo web de alto nivel escrito en Python
+phyton = se escoge la version
+Base de datos Mysql
+
+
+///////////////// Creacion Imagen Base de datos MYSQL /////////////
+docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=123456Qbit -e MYSQL_DATABASE=leadbeta -p 3306:3306 mysql:latest
+
+
+///////////Codigo cmd LOGI_APP-- * leadbro *   /////////////
+1) conda env list  ============= enlista para ver si esta activo el ambiente
+2) conda create -n leadbro python=3.11 =============== crea un nuevo ambiente
+3) conda activate leadbro ============ activacion de ambiente
+4) pip install -r requirements.txt == InstalaRequerimiento 
+5) python manage.py runserver == comando para ejecutar django
+
+/////// crear nuevo usuario //////////////
+1) python manage.py createsuperuser
+
+---ver los curso de Python y powerbield
+desarrollo@qbit.com.ec	Qbit@123Desarrollo
+desarrolloweb@qbit.com.ec	123456Qbit
+
+ Cédula:
+0926091521
+Celular:
+0999424547
+
+https://leadbro.logi.ec/
+6bxGe_7eLeaBz3G
+devNain
+
+

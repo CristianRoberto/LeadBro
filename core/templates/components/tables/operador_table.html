@@ -1,0 +1,79 @@
+<style>
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Estilos agregados para manejar el desbordamiento con barra de desplazamiento */
+    .table-container {
+        max-width: 100%; /* o cualquier otro valor según tus necesidades */
+        /*max-height: 1000px;  o cualquier otro valor según tus necesidades */
+        overflow-x: auto;
+    }
+</style>
+<!-- Mensajes flotantes para el usuario -->
+<div id="alertPlaceholder" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11"></div>
+
+<div class="table-container">
+    <!-- Contenedor agregado -->
+    <table class="row-border hover" id="datatable">
+        <thead>
+            <tr class="bg-primary text-white">
+                <th scope="col" style="width: 10%">Cedula</th>
+                <th scope="col" style="width: 10%">Nombres</th>
+                <th scope="col" style="width: 10%">Apellidos</th>
+                <th scope="col" style="width: 10%">Codigo Dinomi</th>
+                <th scope="col" style="width: 10%">Correo</th>
+                <th scope="col" style="width: 10%">Lider</th>
+                <th scope="col" style="width: 10%">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in operadores %}
+            <tr>
+                <td class="text-normal">
+                    {%if row.1 %} {{ row.1 }} {% endif %}
+                </td>
+                <td class="text-normal">{{ row.2 }}</td>
+                <td class="text-normal">{{ row.3 }}</td>
+                <td class="text-normal">
+                    {%if row.4 %} {{ row.4 }} {% endif %}
+                </td>
+                <td class="text-normal">
+                    {%if row.8 %} {{ row.8 }} {% endif %}
+                </td>
+                <td class="text-normal">
+                    {%if row.9 %} {{ row.9 }} {% endif %}
+                </td>
+                <td class="text-normal">
+                    <div class="row">
+
+                        <button
+                            class="action-button"
+                            title="Editar Operador"
+                            onclick="window.location.href='/operadores/edit/?operador_id={{ row.0 }}'"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                class="bi bi-pencil-square"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                                />
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+

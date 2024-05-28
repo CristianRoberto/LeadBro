@@ -1,0 +1,39 @@
+<form method="post" id="{{ form_id }}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="formFileSm" class="form-label text-normal">Archivo</label>
+        {{ upload_file_form.file }}
+    </div>
+    <!-- hideen 
+    {% if not campaign_required %}
+    {{ upload_file_form.activate_choices }}
+    <div class="mb-3 form-check form-switch">  
+        <label class="form-check-label text-normal" for="flexSwitchCheckDefault">Elegir {{ choices_name }}</label>
+    </div>
+    {% endif %}
+    <div id="select-choice-field">   
+        <label for="choices-list" class="form-label text-normal">{{ choices_name }}</label>
+        {{ upload_file_form.choices }}
+    </div>
+    -->
+</form>
+{% if not campaign_required %}
+<script>
+    function toggleSelect() {
+        var select = document.getElementById("choices-list");
+        select.disabled = !select.disabled;
+
+        var customers = document.getElementById("select-choice-field");
+        customers.style.display = select.disabled ? "none" : "block";
+    }
+
+    //var checkbox = document.getElementById("flexSwitchCheckDefault");
+    //checkbox.onclick = toggleSelect;
+    //toggleSelect();
+</script>
+{% else %}
+<script>
+    const select = document.getElementById('choices-list');
+    select.setAttribute('required', 'true');
+</script>
+{% endif %}

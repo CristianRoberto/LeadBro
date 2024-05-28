@@ -1,0 +1,288 @@
+{% extends 'components/sidebar.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}
+Dashboard | Logi Data Master
+{% endblock %}
+
+{% block css %}
+<!-- Estilos existentes -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css"
+    integrity="sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Estilos para la tabla -->
+<style>
+    body {
+        overflow-y: auto;
+        /* Allows vertical scrolling */
+    }
+
+    .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-container th,
+    .table-container td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+
+    .scroll-sin-barra::-webkit-scrollbar {
+        display: none; /* Para Chrome, Safari y Opera */
+    }
+
+    .scroll-sin-barra {
+        -ms-overflow-style: none;  /* Para Internet Explorer y Edge */
+        scrollbar-width: none;  /* Para Firefox */
+        overflow-y: scroll;
+    }
+
+    .mb-10 {
+        margin-bottom: 5rem !important;
+    }
+
+</style>
+{% endblock %}
+
+
+{% block sb_content %}
+<h5 class="my-4 text-center">Filtros</h5>
+<div class="d-flex flex-column scroll-sin-barra" style="height: 90%; ">
+    {% include 'components/forms/filter_client.html' with filter=filter_form_state form_id='create-new-filter-form' %}
+    <button type="submit" name="new_filter_data" class="btn btn-outline btn-primary bg-primary border border-white mb-10"
+        form="create-new-filter-form" {% if not otp_access_view %} disabled {% endif %} >
+        Filtrar data
+    </button>
+</div>
+
+<script>
+
+    function ocultarDivByState() {
+        // Obtén el campo birthMonth
+        var respStatusSelect = document.getElementById('filter-respStatus');
+
+        // Obtén el valor seleccionado del campo birthMonth
+        var selecteStatus = respStatusSelect.value;
+
+        if (selecteStatus === "3") { 
+            // Oculta el div con id "ventas-filter-container"
+            document.getElementById('ventas-filter-container').style.display = 'block';
+            document.getElementById('frecuencia-filter-container').style.display = 'block';
+        } else {
+            // Muestra el div con id "ventas-filter-container"
+            document.getElementById('ventas-filter-container').style.display = 'none';
+            let checkbox_frecuenciaVenta = document.getElementById("filter-frecuenciaVenta");
+            checkbox_frecuenciaVenta.checked = false;
+            document.getElementById('frecuencia-filter-container').style.display = 'none';
+        }
+
+        if (selecteStatus === "0"){
+            document.getElementById("period-time-filter-container").style.display = 'none';                       
+        } else {
+            // Muestra el div con id "ventas-filter-container"
+            document.getElementById("period-time-filter-container").style.display = 'block';                       
+        }
+    }
+
+    // Ejecuta la función al cargar la página
+    document.addEventListener("DOMContentLoaded", ocultarDivByState);
+
+    // Añade un evento de cambio al campo birthMonth
+    var respStatusSelect = document.getElementById('filter-respStatus');
+    respStatusSelect.addEventListener('change', ocultarDivByState);
+
+</script>
+{% endblock %}
+
+{% block dashcontent %}
+
+    {% if otp_access_view %}
+        <div class="row bg-white shadow-sm justify-content-center p-lg-5 p-md-4 p-sm-3 pt-4">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="mb-5">
+                    <h1 class="text-center mb-3 fs-3">Datos filtrados {% if filter_cant > 1000 %}
+                        {{ filter_cant|stringformat:"s"|slice:":-3" }}.{{ filter_cant|stringformat:"s"|slice:"-3:" }}
+                    {% else %}
+                        {{ filter_cant }}
+                    {% endif %}</h1>
+                </div>
+                <div>
+                    {% include 'components/tables/filter_data_table_clientes.html' %}
+                </div>
+            </div>   
+            <!-- 
+
+                <div class="d-flex justify-content-end">
+                    <button type="button"
+                    class="btn btn-outline btn-primary bg-primary border border-white"
+                    data-bs-toggle="modal" data-bs-target="#otpModal"> 
+                    Download data
+                </button>
+            </div>    
+            -->
+            
+            <div class="row justify-content-center my-5">
+                <div class="col-md-6">
+                    {% if otp_access_dw and valid_download and otp_notice_dw %}
+                        <form id="download-form-filtered" method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="download_data_filtered"
+                                class="btn btn-outline btn-primary bg-primary border border-white">
+                                Download data
+                            </button>
+                        </form>
+                    {% elif otp_notice_dw and not valid_download %}
+                    
+                        {% include 'components/forms/otp_form.html' with otp_form=otp_form_dw form_id='otp-code-dw-form' %}
+                        <div class="text-center">
+                            <button type="submit" name="verify-otp-dw-access" form="otp-code-dw-form" class="btn btn-primary">Verificar OTP</button>
+                        </div>                    
+                    {% else %}   
+                        <form id="send-otp-dw-form" method="post">
+                            {% csrf_token %}
+                            <div class="text-center">
+                                <button type="submit" name="send-otp-dw-access" class="btn btn-primary" {% if filter_cant > 1000 %}disabled{% endif %} >Notificar descarga</button>
+                            </div>
+                        </form>             
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="container my-5">
+            <div id="message-container" class="row justify-content-center">
+                <div class="col-md-6">         
+                    {% if error_validate_message_view %}
+                    <div id="otp-error-msg" class="alert alert-danger d-flex align-items-center" role="alert">
+                        <div class="mx-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="30"
+                                height="30"
+                                fill="currentColor"
+                                class="bi bi-exclamation-triangle-fill"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                                />
+                            </svg>
+                        </div>
+                        <div class="text-normal">{{ error_validate_message_view }}</div>
+                    </div>
+                    {% endif %}
+                    {% if error_send_message_view %}
+                    <div id="otp-error-msg" class="alert alert-danger d-flex align-items-center" role="alert">
+                        <div class="mx-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="30"
+                                height="30"
+                                fill="currentColor"
+                                class="bi bi-exclamation-triangle-fill"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                                />
+                            </svg>
+                        </div>
+                        <div class="text-normal">{{ error_send_message_view }}</div>
+                    </div>
+                    {% endif %}
+                    {% if success_send_message_view %}
+                    <div id="otp-error-msg" class="alert alert-success d-flex align-items-center" role="alert">
+                        <div class="mx-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="30"
+                                height="30"
+                                fill="currentColor"
+                                class="bi bi-exclamation-triangle-fill"
+                                viewBox="0 0 16 16"
+                            >
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.525 7.466a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.99-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </svg>
+                        </div>
+                        <div class="text-normal">{{ success_send_message_view }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="otp-base-control" class="row justify-content-center">
+                <div class="col-md-6">
+                    {% if otp_notice_view %}
+                        {% include 'components/forms/otp_form.html' with otp_form=otp_form_view form_id='otp-code-form' %}
+                        <div class="text-center">
+                            <button type="submit" name="verify-otp-access" form="otp-code-form" class="btn btn-primary">Verificar OTP</button>
+                        </div>
+                    {% else %}   
+                        <form id="send-otp-form" method="post">
+                            {% csrf_token %}
+                        </form>             
+                        <div class="text-center">
+                            <button type="submit" name="send-otp-access" form="send-otp-form" class="btn btn-primary">Notificar acceso</button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <!-- Modal -->
+    <div class="modal fade " id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title justify-content-center" id="otpModalLabel">OTP Verification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí incluyes el contenido de tu formulario OTP -->
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        {% if otp_access_dw and valid_download and otp_notice_dw %}
+                            <div class="d-flex justify-content-end">
+                                <form id="download-form-filtered" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" name="download_data_filtered"
+                                        class="btn btn-outline btn-primary bg-primary border border-white">
+                                        Download data
+                                    </button>
+                                </form>
+                            </div>
+                        {% elif otp_notice_dw and not valid_download %}
+                        
+                            {% include 'components/forms/otp_form.html' with otp_form=otp_form_dw form_id='otp-code-dw-form' %}
+                            <div class="text-center">
+                                <button type="submit" name="verify-otp-dw-access" form="otp-code-dw-form" class="btn btn-primary">Verificar OTP</button>
+                            </div>                    
+                        {% else %}   
+                            <form id="send-otp-dw-form" method="post">
+                                {% csrf_token %}
+                                <div class="text-center">
+                                    <button type="submit" name="send-otp-dw-access" class="btn btn-primary">Notificar acceso</button>
+                                </div>
+                            </form>             
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    
+
+{% endblock %}

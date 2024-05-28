@@ -1,0 +1,144 @@
+{% extends 'components/sidebar.html' %} {% load static %} {% block title %}
+Dashboard | Logi Data Master {% endblock %} {% block css %}
+<!-- Estilos existentes -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css"
+    integrity="sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+/>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+<!-- Estilos para la tabla -->
+<style>
+    body {
+        overflow-y: auto;
+        /* Allows vertical scrolling */
+    }
+
+    .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-container th,
+    .table-container td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+
+    .scroll-sin-barra::-webkit-scrollbar {
+        display: none; /* Para Chrome, Safari y Opera */
+    }
+
+    .scroll-sin-barra {
+        -ms-overflow-style: none;  /* Para Internet Explorer y Edge */
+        scrollbar-width: none;  /* Para Firefox */
+        overflow-y: scroll;
+    }
+
+</style>
+{% endblock %} {% block sb_content %}
+
+<h5 class="my-4 text-center">Crear Campaña</h4>
+<div class="d-flex flex-column scroll-sin-barra" style="height: 90%; ">
+    <form id="vista-crear" method="post">
+        {% csrf_token %}
+
+        {% if activarRegistro %}
+        <button type="submit" name="vista_registro"
+            class="btn btn-outline btn-primary bg-primary border border-white">
+            Volver
+        </button>
+        {% else %}
+        <button type="submit" name="vista_crear"
+            class="btn btn-outline btn-primary bg-primary border border-white">
+            Crear
+        </button>
+        {% endif %}
+    </form>
+</div>
+{% endblock %} 
+
+{% block dashcontent %}
+<div
+    class="row bg-white shadow-sm justify-content-center p-lg-5 p-md-4 p-sm-3 pt-4"
+>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        
+        <div id="message-container" class="row justify-content-center">
+            <div class="col-md-6">         
+                {% if insert_state and insert_state == "fail" %}
+                <div id="dinomi-error-msg" class="alert alert-danger d-flex align-items-center" role="alert">
+                    <div class="mx-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="30"
+                            height="30"
+                            fill="currentColor"
+                            class="bi bi-exclamation-triangle-fill"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                            />
+                        </svg>
+                    </div>
+                    <div class="text-normal">{{ message }}</div>
+                </div>
+                {% endif %}
+                {% if insert_state and insert_state == "success" %}
+                <div id="dinomi-error-msg" class="alert alert-danger d-flex align-items-center" role="alert">
+                    <div class="mx-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="30"
+                            height="30"
+                            fill="currentColor"
+                            class="bi bi-exclamation-triangle-fill"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                            />
+                        </svg>
+                    </div>
+                    <div class="text-normal">{{ message }}</div>
+                </div>
+                {% endif %}                
+            </div>
+        </div>
+        
+        {% if activarRegistro %}
+            {% include 'components/forms/add_dinomi_form.html' with dinomi_form=dinomi_form form_id='new-dinomi-form' %}
+            <button
+                type="submit"
+                name="new_dinomi_insert"
+                class="btn btn-outline btn-primary bg-primary border border-white"
+                form="new-dinomi-form"
+            >
+                Registrar
+            </button>
+        {% else %}
+            <div class="mb-5">
+                <h1 class="text-center mb-3 fs-3">REGISTROS</h1>
+            </div>
+
+            <div>{% include 'components/tables/dinomi_table.html' %}</div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% include 'components/tables/datatable_scripts.html' %}
+{% endblock %}

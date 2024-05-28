@@ -1,0 +1,15 @@
+<form method="post" id="{{ form_id }}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="customer-name" class="form-label text-normal">Nombre SubCampaña</label>
+        {{ campaign.name }}
+    </div>
+    <div class="mb-3">
+        <label for="contact-name" class="form-label text-normal">Campaña</label>
+        {{ campaign.listacampana }}
+    </div>
+    <div>
+        {{ campaign.id }}
+    </div>
+</form>
+

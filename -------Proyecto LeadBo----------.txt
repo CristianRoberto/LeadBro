@@ -1,0 +1,6 @@
+-------Proyecto LeadBo----------
+Angular = FronEnd
+NodeJs = BackEnd
+Docker = 
+Redis =
+Mongo = base de datos

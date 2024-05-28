@@ -1,0 +1,246 @@
+<form method="post" id="{{ form_id }}" class="w-100">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="filter-respStatus" class="form-label text-bold"
+            >Estado</label
+        >
+        {{ filter.response_status }}
+    </div>
+
+    <div class="mb-3">
+        <label for="filter-socioPycca" class="form-label text-bold"
+            >Socio Pycca</label
+        >
+        {{ filter.socio_pycca }}
+    </div>
+
+    <div id="cupo-pycca-filter-container" class="mb-3">
+        <label class="form-label text-bold">Cupo Pycca</label>
+        <div class="row">
+            <div id="cupoFrom_form" class="col">
+                <label for="filter-cupo-from" class="form-label text-normal"
+                    >Desde</label
+                >
+                {{ filter.cupoFrom }}
+            </div>
+            <div id="cupoTo_form" class="col">
+                <label for="filter-cupo-to" class="form-label text-normal"
+                    >Hasta</label
+                >
+                {{ filter.cupoTo}}
+            </div>
+        </div>
+    </div>
+
+    <div id="period-time-filter-container" class="mb-3">
+        <label class="form-label text-bold">Periodo</label>
+        <div class="row">
+            <div class="col">
+                <label for="filter-date-from" class="form-label text-normal"
+                    >Desde</label
+                >
+                {{ filter.dateFrom }}
+            </div>
+            <div class="col">
+                <label for="filter-date-to" class="form-label text-normal"
+                    >Hasta</label
+                >
+                {{ filter.dateTo}}
+            </div>
+        </div>
+    </div>
+
+    <div id="ventas-filter-container" class="mb-3">
+        <label class="form-label text-bold">Ventas</label>
+        <div class="row">
+            <div class="col">
+                <label for="filter-venta-from" class="form-label text-normal"
+                    >Desde</label
+                >
+                {{ filter.ventaFrom }}
+            </div>
+            <div class="col">
+                <label for="filter-venta-to" class="form-label text-normal"
+                    >Hasta</label
+                >
+                {{ filter.ventaTo}}
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="filter-ciudad" class="form-label text-bold">Ciudad</label>
+        {{ filter.ciudad }}
+    </div>
+
+    <div class="mb-3">
+        <label for="filter-birthMonth" class="form-label text-bold"
+            >Mes de nacimiento</label
+        >
+        {{ filter.birthMonth }}
+    </div>
+
+    <div class="mb-3">
+        <label for="filter-birthMonth" class="form-label text-bold">Sexo</label>
+        {{ filter.sexo }}
+    </div>
+
+    <div class="mb-3 p-0 form-check form-switch">
+        <label
+            class="form-check-label text-bold text-start"
+            for="flexSwitchCheckDefault"
+            >Elegir</label
+        >
+    </div>
+
+    <div class="mb-3">
+        <div class="d-flex align-items-center justify-content-start">
+            <div class="mb-3 form-check form-switch">
+                {{ filter.activate_edad }}
+                <label
+                    class="form-check-label text-bold"
+                    for="flexSwitchCheckDefault"
+                    >Edad</label
+                >
+            </div>
+        </div>
+        <div class="row">
+            <div id="edadFrom_form" class="col">
+                <label for="filter-edad-from" class="form-label text-normal"
+                    >Desde</label
+                >
+                {{ filter.edadFrom }}
+            </div>
+            <div id="edadTo_form" class="col">
+                <label for="filter-edad-to" class="form-label text-normal"
+                    >Hasta</label
+                >
+                {{ filter.edadTo }}
+            </div>
+        </div>
+    </div>
+
+
+    <div id="frecuencia-filter-container" class="mb-3">
+        <label for="filter-frecuenciaVenta" class="form-label text-bold"
+            >Frecuencia Venta</label
+        >
+        {{ filter.frecuenciaVenta }}
+    </div>
+
+
+    <div id="frecuencia-venta-filter-container" class="mb-3">
+        <div class="row">
+            <div id="frecuenciaFrom_form" class="col">
+                <label for="filter-frecuencia-from" class="form-label text-normal"
+                >Desde</label
+                >
+                {{ filter.frecuenciaFrom }}
+            </div>
+            <div id="frecuenciaTo_form" class="col">
+                <label for="filter-frecuencia-to" class="form-label text-normal"
+                >Hasta</label
+                >
+                {{ filter.frecuenciaTo}}
+            </div>
+        </div>
+    </div>
+        
+
+    <!--
+    <div class="mb-3">
+      <label for="filter-supervisor" class="form-label text-bold"
+      >Supervisor</label
+      >
+      {{ filter.supervisor }}
+    </div>
+  -->
+</form>
+
+<script>
+    let checkbox_edad = document.getElementById("flexSwitchCheckDefault");
+    let checkbox_SocioPycca = document.getElementById("filter-socioPycca");
+    let checkbox_frecuenciaVenta = document.getElementById("filter-frecuenciaVenta");
+
+    function toggle_edad() {
+        const state = checkbox_edad.checked;
+        let edadFrom_select = document.getElementById("filter-edad-from");
+        edadFrom_select.disabled = state ? false : true;
+        let edadTo_select = document.getElementById("filter-edad-to");
+        edadTo_select.disabled = state ? false : true;
+
+        let field_edadFrom = document.getElementById("edadFrom_form");
+        field_edadFrom.style.display = state ? "block" : "none";
+        let field_edadTo = document.getElementById("edadTo_form");
+        field_edadTo.style.display = state ? "block" : "none";
+    }
+
+    checkbox_SocioPycca.addEventListener("change", function () {
+        const stateCheck = checkbox_SocioPycca.checked;
+
+        let edadFrom_select = document.getElementById("filter-cupo-from");
+        edadFrom_select.disabled = stateCheck ? false : true;
+        let edadTo_select = document.getElementById("filter-cupo-to");
+        edadTo_select.disabled = stateCheck ? false : true;
+
+        let field_edadFrom = document.getElementById("cupoFrom_form");
+        field_edadFrom.style.display = stateCheck ? "block" : "none";
+        let field_edadTo = document.getElementById("cupoTo_form");
+        field_edadTo.style.display = stateCheck ? "block" : "none";
+        let title_cupo = document.getElementById("cupo-pycca-filter-container");
+        title_cupo.style.display = stateCheck ? "block" : "none";
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const stateCheck = checkbox_SocioPycca.checked;
+
+        let edadFrom_select = document.getElementById("filter-cupo-from");
+        edadFrom_select.disabled = stateCheck ? false : true;
+        let edadTo_select = document.getElementById("filter-cupo-to");
+        edadTo_select.disabled = stateCheck ? false : true;
+
+        let field_edadFrom = document.getElementById("cupoFrom_form");
+        field_edadFrom.style.display = stateCheck ? "block" : "none";
+        let field_edadTo = document.getElementById("cupoTo_form");
+        field_edadTo.style.display = stateCheck ? "block" : "none";
+        let title_cupo = document.getElementById("cupo-pycca-filter-container");
+        title_cupo.style.display = stateCheck ? "block" : "none";
+    });
+
+    checkbox_frecuenciaVenta.addEventListener("change", function () {
+        const stateCheck = checkbox_frecuenciaVenta.checked;
+
+        let edadFrom_select = document.getElementById("filter-frecuencia-from");
+        edadFrom_select.disabled = stateCheck ? false : true;
+        let edadTo_select = document.getElementById("filter-frecuencia-to");
+        edadTo_select.disabled = stateCheck ? false : true;
+
+        let field_edadFrom = document.getElementById("frecuenciaFrom_form");
+        field_edadFrom.style.display = stateCheck ? "block" : "none";
+        let field_edadTo = document.getElementById("frecuenciaTo_form");
+        field_edadTo.style.display = stateCheck ? "block" : "none";
+        let title_cupo = document.getElementById("frecuencia-venta-filter-container");
+        title_cupo.style.display = stateCheck ? "block" : "none";
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const stateCheck = checkbox_frecuenciaVenta.checked;
+
+        let edadFrom_select = document.getElementById("filter-frecuencia-from");
+        edadFrom_select.disabled = stateCheck ? false : true;
+        let edadTo_select = document.getElementById("filter-frecuencia-to");
+        edadTo_select.disabled = stateCheck ? false : true;
+
+        let field_edadFrom = document.getElementById("frecuenciaFrom_form");
+        field_edadFrom.style.display = stateCheck ? "block" : "none";
+        let field_edadTo = document.getElementById("frecuenciaTo_form");
+        field_edadTo.style.display = stateCheck ? "block" : "none";
+        let title_cupo = document.getElementById("frecuencia-venta-filter-container");
+        title_cupo.style.display = stateCheck ? "block" : "none";
+    });
+
+    
+    checkbox_edad.onclick = toggle_edad;
+    toggle_edad();
+</script>

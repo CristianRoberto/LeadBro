@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="mt-5 mb-3">
+        <h3 class="text-normal">
+            Conectar campos con la base de datos
+        </h3>
+        <p class="text-normal">
+            Elija el campo que corresponde con el nombre de la columna de su archivo de Google Sheets. Por defecto
+            los campos no se encuentran seleccionados.
+            Los campos marcados como "No importar" no se subirán a la base de datos.
+        </p>
+    </div>
+</div>
+<form method="post" id="{{ form_id }}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container py-5 bg-light select-columns-container">
+        <div class="row px-5 text-normal mb-4">
+            <div class="col-6 fs-4">Columna del archivo</div>
+            <div class="col-3 fs-4">Campo</div>
+        </div>
+        <hr class="bg-danger border-2 border-top border-danger mb-4">
+        {% for column_name, rows_select in columns_info %}
+        <div class="row px-5 py-4 mb-3 shadow-sm select-columns-container mx-auto bg-white">
+            <div class="col-6 text-normal fs-5">{{ column_name }}</div>
+            <div class="col-3">{{ rows_select }}</div>
+        </div>
+        {% endfor %}
+        <input type="hidden" name="file_uploading_data" value="{{ file_uploading_data }}">
+    </div>
+</form>
+<div class="container mb-5">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4 m-4">
+        <button type="submit" name="select-columns"
+            class="btn btn-outline btn-primary bg-primary border border-white py-3   px-4 rounded-pill"
+            form="{{ form_id }}">
+            <b>Subir columnas
+        </button>
+    </div>
+</div>

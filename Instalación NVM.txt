@@ -1,0 +1,9 @@
+/////////////Instalación NVM
+NVM o Node Version Manager
+
+nvm list
+nvm use 16.15.1 == node es la ultima versión 22.02.2
+node -v
+nvm current
+npm -v
+npm install -g yarn

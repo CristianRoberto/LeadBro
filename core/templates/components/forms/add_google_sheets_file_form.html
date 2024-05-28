@@ -1,0 +1,15 @@
+<form method="post" id="{{ form_id }}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="spreadheet-id" class="form-label text-normal">Id del documento</label>
+        {{ spreadsheet_form.spreadsheet_id }}
+    </div>
+    <div class="mb-3">
+        <label for="spreadheet-name" class="form-label text-normal">Nombre del documento</label>
+        {{ spreadsheet_form.spreadsheet_name }}
+    </div>
+    <div class="mb-3">
+        <label for="cutting-time-range" class="form-label text-normal">Horario de cortes</label>
+        {{ spreadsheet_form.cutting_time_range }}
+    </div>
+</form>

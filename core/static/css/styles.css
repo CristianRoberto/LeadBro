@@ -1,0 +1,124 @@
+.text-primary {
+    color: #c9184a !important;
+}
+
+.bg-primary {
+    background-color: #c9184a !important;
+}
+
+.brand-bg {
+    background-color: #c9184a !important;
+    border-color: #c9184a !important;
+}
+
+.brand-bg2 {
+    background-color: #E0AE29 !important;
+    border-color: #E0AE29 !important;
+}
+
+.text-normal {
+    font-weight: normal !important;
+}
+
+hr {
+    border-top: 1px solid white;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+#datatable_wrapper label {
+    font-weight: bold !important;
+}
+
+.pagination li a {
+    font-weight: bold !important;
+}
+
+#datatable_info {
+    font-weight: bold !important;
+}
+
+.pagination li .active {
+    background-color: #E0AE29 !important;
+}
+
+#sidebar {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    padding-top: 4%;
+    margin-left: -10px;
+}
+
+.login-component {
+    margin-top: 10rem;
+}
+
+.dashcontent {
+    width: 78%;
+    margin-top: 5%;
+}
+
+.sticky-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.navbar-brand {
+    margin-right: -12rem;
+}
+
+.card-component {
+    height: 9.5rem;
+    padding-bottom: 0%;
+    box-shadow: 2px 2px 5px grey;
+    transition: transform 0.5s;
+}
+
+.card-component:hover {
+    transform: scale(1.02);
+}
+
+.icon {
+    opacity: 20%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.action-button {
+    border: none;
+    outline: none;
+    background: none;
+}
+
+.select-columns-container {
+    box-shadow: inset 0px 0px 3px 3px #c9c9c930;
+}
+
+.check-image {
+    width: 10rem;
+    height: auto;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
+#uploading-report-content {
+    width: 55%;
+    margin: auto;
+}
+
+.table-report {
+    width: 90%;
+    margin: auto;
+}

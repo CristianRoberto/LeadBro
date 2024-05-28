@@ -1,0 +1,69 @@
+{% extends 'components/sidebar.html' %}
+
+{% load static %}
+
+{% block title %}
+SubCampañas | Logi Data Master
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block sb_content %}
+<!-- Aquí agregamos el bloque de mensajes -->
+{% if messages %}
+    <div class="message-container"      >
+        <div class="row">
+            <div class="col-md-12">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert"  style="color: #f9f0f0;  border-radius: 40px ; height: 100px; width: 175px; 
+                    box-shadow: 0 0 3px 1px rgb(221, 218, 218);"    >
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+<!-- Fin del bloque de mensajes -->
+
+<h5 class="my-4">Agregar SubCampaña</h5>
+{% include 'components/forms/add_subcampaign_form.html' with campaign=form form_id='add-new-campaign-form' %}
+<button type="submit" name="create_new_campaign" class="btn btn-outline btn-primary bg-primary border border-white" form="add-new-campaign-form">
+    Agregar Nueva SubCampaña
+</button>
+{% endblock %}
+
+{% block dashcontent %}
+<div class="row bg-white shadow-sm justify-content-center p-lg-5 p-md-4 p-sm-3 pt-4">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="mb-5">
+            <h1 class="text-left mb-3 fs-3">Lista de SubCampañas</h1>
+            {% if customer_name %}
+                <h5>{{ customer_name }}</h5>
+            {% endif %}
+        </div>
+        <div>
+            {% include 'components/tables/subcampaigns_table.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    function hideMessageContainer() {
+        var container = document.getElementById('message-container');
+        if (container) {
+            container.style.display = 'none';
+        }
+    }
+</script>
+
+{% include 'components/tables/datatable_scripts.html' %}
+{% endblock %}
+
+

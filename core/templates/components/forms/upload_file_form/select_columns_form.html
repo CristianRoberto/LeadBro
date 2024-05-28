@@ -1,0 +1,20 @@
+<form method="post" id="{{ form_id }}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container py-5 bg-light select-columns-container">
+        <div class="row px-5 text-normal mb-4">
+            <div class="col-6 fs-4">Columna</div>
+            <div class="col-3 fs-4">Num. Registros</div>
+            <div class="col-3 fs-4">Campo</div>
+        </div>
+        <hr class="bg-danger border-2 border-top border-danger mb-4">
+        {% for column_name, column_rows, user_rows_select in columns_info %}
+        <div class="row px-5 py-4 mb-3 shadow-sm select-columns-container mx-auto bg-white">
+            <div class="col-6 text-normal fs-5">{{ column_name }}</div>
+            <div class="col-3 text-normal fs-6">{{ column_rows }}</div>
+            <div class="col-3">{{ user_rows_select }}</div>
+        </div>
+        {% endfor %}
+        <input type="hidden" name="file_uploading_data" value="{{ file_uploading_data }}">
+        <input type="hidden" name="excel-file" value="{{ excel_file }}">
+    </div>
+</form>

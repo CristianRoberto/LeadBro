@@ -1,0 +1,33 @@
+{% extends 'components/sidebar.html' %}
+
+{% load static %}
+
+{% block title %}
+Subir Clientes | Logi Data Master
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css"
+    integrity="sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block sb_content %}
+<h5 class="my-4">Subir archivo</h5>
+{% include 'components/forms/upload_file_form/upload_base_file_form.html' with form_id='upload-lead-form' %}
+<button type="submit" name="process-leads-file" class="mt-4 btn btn-outline btn-primary bg-primary border border-white"
+    form="upload-lead-form">
+    Procesar Archivo
+</button>
+{% endblock %}
+
+{% block dashcontent %}
+{% include 'uploading_files/upload_file_pannel.html' %}
+{% endblock %}
+{% block scripts %}
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+{% endblock %}

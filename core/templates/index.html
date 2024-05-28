@@ -1,0 +1,62 @@
+{% extends 'components/sidebar.html' %}
+
+{% load static %}
+
+{% block title %}
+Logi Data Master
+{% endblock %}
+
+{% block dashcontent %}
+<div class="row bg-white shadow-sm justify-content-center p-lg-5 p-md-4 p-sm-3 pt-4">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="text-left mb-3 fs-3">Inicio</h1>
+            </div>
+            <div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        {% url 'subir-leads' as url %}
+                        {% static 'svgs/file_icon.svg' as icon_uri %}
+                        {% include 'components/option_card.html' with title='Dinomi' color='#f3722c' icon=icon_uri url=url %}
+                    </div>
+                    <div class="col">
+                        {% url 'subir-clientes' as url %}
+                        {% static 'svgs/users.svg' as icon_uri %}
+                        {% include 'components/option_card.html' with title='Subir Clientes' color='#ffd60a' icon=icon_uri url=url %}
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col">
+                        {% url 'campanhas' as url %}
+                        {% static 'svgs/funnel.svg' as icon_uri %}
+                        {% include 'components/option_card.html' with title='Campañas' color='#fb8b24' icon=icon_uri url=url %}
+                    </div>
+                    <div class="col">
+                        {% url 'companias' as url %}
+                        {% static 'svgs/build.svg' as icon_uri %}
+                        {% include 'components/option_card.html' with title='Compañías' color='#ef233c' icon=icon_uri url=url %}
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col">
+                        {% url 'google-sheet' as url %}
+                        {% static 'svgs/google_drive.svg' as icon_uri %}
+                        {% include 'components/option_card.html' with title='Google Sheet' color='#90be6d' icon=icon_uri url=url %}
+                    </div>
+                    <div class="col">
+                        {% url 'reportes' as url %}
+                        {% static 'svgs/chart.svg' as icon_uri %}
+                        {% include 'components/option_card.html' with target='“_blank”' title='Reportes' color='#7BDFF2' icon=icon_uri url=url %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

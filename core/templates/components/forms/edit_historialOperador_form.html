@@ -1,0 +1,173 @@
+{% load operadorFilters %}
+
+<form method="post" id="{{ form_id }}">
+    {% csrf_token %}
+    
+    <div class="row mb-3"> 
+        <div class="col-4">           
+        
+            <div class="mb-3">
+                <label for="operador-compania" class="form-label text-bold"
+                    >Compania</label
+                >
+                {{ editOperador.compania }} 
+                {% for error in editOperador.compania.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+        
+            <div class="mb-3">
+                <label for="operador-campana" class="form-label text-bold"
+                    >Campana</label
+                >
+                {{ editOperador.campana }} 
+                {% for error in editOperador.campana.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col border rounded border-secondary">
+            <table id="tabla-dinamica" class="table">
+                <thead>
+                    <tr>
+                        <th >#</th>
+                        <th class="d-none">id</th>
+                        <th>Campana</th>
+                        <th>Cuota</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los campos dinámicos se insertarán aquí -->
+                    {% if listHistorial %} 
+                        {% for item in listHistorial %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td class="d-none">
+                                    {% get_field editOperador 'historialId' item %}
+                                </td>
+                                <td>
+                                    {% get_field editOperador 'historialCampana' item %}
+                                </td>
+                                <td>
+                                    {% get_field editOperador 'historialCuota' item %}
+                                </td>
+                                <td>
+                                    {% get_field editOperador 'historialFecha' item %}
+                                </td>
+                                <td>
+                                    <button type="button" onclick="eliminarFila(this)">Eliminar</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    
+    
+
+
+    <div>{{ editOperador.id }}</div>
+    
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const companiaSelector = document.getElementById('operador-compania');
+        const campanaSelector = document.getElementById('operador-campana');
+    
+        companiaSelector.addEventListener('change', function () {
+            const companiaId = this.value;
+            fetch(`${window.location.origin}/api/?compania=${companiaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    campanaSelector.innerHTML = '';
+
+                    const defaultOption = new Option('Seleccione una campaña', '', false, false);
+                    defaultOption.disabled = true;
+                    campanaSelector.appendChild(defaultOption);
+                    campanaSelector.selectedIndex = 0; // Asegura que esta opción está seleccionada por defecto
+
+                    data.forEach(sub => {
+                        const option = new Option(sub.nombre, sub.id);
+                        campanaSelector.add(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching campañas:', error));
+        });
+
+        function loadCampanas () {
+            const companiaId = companiaSelector.value;
+            fetch(`${window.location.origin}/api/?compania=${companiaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    campanaSelector.innerHTML = '';
+                    // Añadir una opción predeterminada que no sea seleccionable
+                    const defaultOption = new Option('Seleccione una campaña', '', false, false);
+                    defaultOption.disabled = true;
+                    campanaSelector.appendChild(defaultOption);
+                    campanaSelector.selectedIndex = 0; // Asegura que esta opción está seleccionada por defecto
+
+                    data.forEach(sub => {
+                        const option = new Option(sub.nombre, sub.id);
+                        campanaSelector.add(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching campañas:', error));
+        };
+
+        loadCampanas();
+
+        
+        //gestion de historial de operador
+        campanaSelector.addEventListener('change', function() {
+            // Esta función se ejecutará cada vez que el usuario cambie la selección
+            const selectedText = this.options[this.selectedIndex].text;
+            const selectedValue = this.value;
+            agregarCampo(selectedText, selectedValue);
+        });
+
+    
+
+        function agregarCampo(text, value) {
+            var tabla = document.getElementById("tabla-dinamica").getElementsByTagName('tbody')[0];
+
+            // Verificar si el valor ya existe en la tabla
+            let existe = Array.from(tabla.getElementsByTagName('input')).some(function(input) {
+                return input.value === value; // Compara los valores textuales
+            });
+
+            if (existe) return;
+            
+            let row = tabla.insertRow();
+            let filaNum = row.insertCell(0);
+            let idFila = row.insertCell(1);
+            let campanaFila = row.insertCell(2);
+            let cuotaFila = row.insertCell(3);
+            let fechaFila = row.insertCell(4);
+            let actionFila = row.insertCell(5);
+
+            idFila.classList.add("d-none");
+            filaNum.innerHTML = tabla.rows.length;
+            idFila.innerHTML = `<input type="text" name="historialId${value}" value="${value}" class="form-control" readonly />`;
+            campanaFila.innerHTML = `<input type="text" name="historialCampana${value}" value="${text}" class="form-control" readonly />`;
+            cuotaFila.innerHTML = `<input type="number" name="historialCuota${value}" value="0" class="form-control" step="1" />`;
+            fechaFila.innerHTML = `<input type="date" name="historialFecha${value}" value="${new Date().toISOString().split('T')[0]}" class="form-control" readonly />`;
+            actionFila.innerHTML = '<button type="button" onclick="eliminarFila(this)">Eliminar</button>';
+        }
+
+    });
+    
+    function eliminarFila(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        const campanaSelector = document.getElementById('operador-campana');
+
+        campanaSelector.selectedIndex = 0; 
+    }
+</script>
+

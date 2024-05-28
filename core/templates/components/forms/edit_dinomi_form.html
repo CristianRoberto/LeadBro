@@ -1,0 +1,33 @@
+<form method="post" id="{{ form_id }}">
+  {% csrf_token %}
+
+  <div class="mb-3 text-black">
+    <label for="dinomi-startDate" class="form-label text-bold">Fecha inicio</label>
+    {{ editDinomiForm.startDate }}
+  </div>
+  
+  <div class="mb-3 text-black">
+    <label for="dinomi-endDate" class="form-label text-bold">Fecha fin</label>
+    {{ editDinomiForm.endDate }}
+  </div>
+
+  <div class="mb-3 text-black">
+    <label for="dinomi-tipo" class="form-label text-bold">Tipo</label>
+    {{ editDinomiForm.tipo }}
+  </div>
+
+  <div class="mb-3 text-black">
+    <label for="dinomi-nombre" class="form-label text-bold">Nombre</label>
+    {{ editDinomiForm.nombre_dinomi }}
+  </div>  
+
+  <div class="mb-3 text-black">
+    <label for="dinomi-equipo" class="form-label text-bold">Equipo</label>
+    {{ editDinomiForm.equipo_dinomi }}
+  </div>  
+  <div class="mb-3 text-black">
+    <label for="dinomi-estado" class="form-label text-bold">Estado</label>
+    {{ editDinomiForm.estado_dinomi }}
+  </div> 
+
+</form>

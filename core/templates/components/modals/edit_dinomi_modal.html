@@ -1,0 +1,17 @@
+<div class="modal fade" tabindex="-1" id="edit-dinomi-{{ row.0 }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Editar Dinomi</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'components/forms/edit_dinomi_form.html' with customer=row_form form_id=form_id %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary bg-primary" form="{{ form_id }}" name="update-customer-data">Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>

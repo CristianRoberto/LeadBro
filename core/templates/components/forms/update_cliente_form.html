@@ -1,0 +1,35 @@
+ <form method="post" id="{{ form_id }}"  class="mb-3">
+    {% csrf_token %}
+    <input type="hidden" class="form-control" id="id-{{ form_id }}" name="id" value="{{ data_client.0 }}">
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="nombres-{{ form_id }}" class="form-label">Nombres</label>
+                <input type="text" class="form-control" id="nombres-{{ form_id }}" name="nombres" value="{{ data_client.1 }}">
+            </div>
+            <div class="mb-3">
+                <label for="apellidos-{{ form_id }}" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" id="apellidos-{{ form_id }}" name="apellidos" value="{{ data_client.2 }}">
+            </div>
+            <div class="mb-3">
+                <label for="cedula-{{ form_id }}" class="form-label">Cédula</label>
+                <input type="text" class="form-control" id="cedula-{{ form_id }}" name="cedula" value="{{ data_client.3 }}">
+            </div>
+            <div class="mb-3">
+                <label for="fecha-nacimiento-{{ form_id }}" class="form-label">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="fecha-nacimiento-{{ form_id }}" name="fecha_nacimiento" value="{{ data_client.4 }}">
+            </div>
+            <div class="mb-3">
+                <label for="edad-{{ form_id }}" class="form-label">Edad</label>
+                <input type="text" class="form-control" id="edad-{{ form_id }}" name="edad" value="{{ data_client.5 }}">
+            </div>
+            <div class="mb-3">
+                <label for="genero-{{ form_id }}" class="form-label">Género</label>
+                <input type="text" class="form-control" id="genero-{{ form_id }}" name="genero" value="{{ data_client.6 }}">
+            </div>
+            <div class="mb-3">
+                <label for="ciudad-{{ form_id }}" class="form-label">Ciudad</label>
+                <input type="text" class="form-control" id="ciudad-{{ form_id }}" name="ciudad" value="{{ data_client.7 }}">
+            </div>
+    </form>
+
+

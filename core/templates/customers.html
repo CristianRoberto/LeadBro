@@ -1,0 +1,55 @@
+{% extends 'components/sidebar.html' %}
+
+{% load static %}
+
+{% block title %}
+Compañías | Logi Data Master
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<style>   
+
+    .scroll-sin-barra::-webkit-scrollbar {
+        display: none; /* Para Chrome, Safari y Opera */
+    }
+
+    .scroll-sin-barra {
+        -ms-overflow-style: none;  /* Para Internet Explorer y Edge */
+        scrollbar-width: none;  /* Para Firefox */
+        overflow-y: scroll;
+    }
+
+    .mb-10 {
+        margin-bottom: 5rem !important;
+    }
+
+</style>
+{% endblock %}
+
+{% block sb_content %}
+<h5 class="my-4 text-center">Agregar nueva compañía</h5>
+<div class="d-flex flex-column scroll-sin-barra" style="height: 90%; ">
+    {% include 'components/forms/add_customer_form.html' with customer=create_customer_form form_id='process-file-form' %}    
+    <button type="submit" name="create_new_customer" class="btn btn-outline btn-primary bg-primary border border-white mb-10" form="process-file-form">
+        Agregar Compañía
+    </button>
+</div>
+{% endblock %}
+
+{% block dashcontent %}
+<div class="row bg-white shadow-sm justify-content-center p-lg-5 p-md-4 p-sm-3 pt-4">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="mb-5">
+            <h1 class="text-left mb-3 fs-3">Compañías</h1>
+        </div>
+        <div>
+            {% include 'components/tables/customers_table.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% include 'components/tables/datatable_scripts.html' %}
+{% endblock %}

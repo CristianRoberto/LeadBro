@@ -1,0 +1,59 @@
+<form method="post" id="{{ form_id }}">
+  {% csrf_token %}
+
+  
+
+  <div class="mb-3 text-black">
+    <label for="search-cedula" class="form-label text-bold">Cedula</label>
+    {{ search_form.cedula }}
+  </div>
+  
+  <div class="mb-3 text-black">
+    <label for="search-celular" class="form-label text-bold">Celular</label>
+    {{ search_form.celular }}
+  </div>
+  
+  <!--
+  <div class="mb-3 text-black">
+    <label for="search-nombres" class="form-label text-bold">Nombres</label>
+    {{ search_form.nombres }}
+  </div>
+
+  <div class="mb-3 text-black">
+    <label for="search-apellidos" class="form-label text-bold">Apellidos</label>
+    {{ search_form.apellidos }}
+  </div>
+
+
+  <div class="mb-3">
+    <label for="search-birthMonth" class="form-label text-bold"
+      >Birth Month</label
+    >
+    {{ search_form.birthMonth }}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label text-bold">Edad</label>
+    <div class="row">
+      <div class="col">
+        <label for="search-edad-from" class="form-label text-normal"
+          >Desde</label
+        >
+        {{ search_form.edadFrom }}
+      </div>
+      <div class="col">
+        <label for="search-edad-to" class="form-label text-normal">Hasta</label>
+        {{ search_form.edadTo}}
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="mb-3">
+    <label for="search-ciudad" class="form-label text-bold">Ciudad</label>
+    {{ search_form.ciudad }}
+  </div>
+  -->
+
+
+</form>

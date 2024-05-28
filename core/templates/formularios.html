@@ -1,0 +1,340 @@
+{% extends 'components/sidebar.html' %} {% load static %} {% block title %}
+Dashboard | Logi Data Master {% endblock %} {% block css %}
+<!-- Estilos existentes -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css"
+    integrity="sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+/>
+
+<!-- Estilos para la tabla -->
+<style>
+    body {
+        overflow-y: auto;
+        /* Allows vertical scrolling */
+    }
+
+    .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-container th,
+    .table-container td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+
+
+
+    /* Estilos para el formulario y sus elementos */
+    .sub-dashcontent {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centrar verticalmente si es necesario */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px; /* Bordes redondeados */
+        max-width: 800px; /* Ancho máximo más grande para el formulario */
+        width: 80%; /* Usa un porcentaje del ancho de la pantalla */
+        margin: auto; /* Esto ayudará a centrar si no usas Flexbox */
+        padding: 20px; /* Espacio dentro del formulario */
+        margin-top: 20px; /* Asegúrate de que haya un espacio en la parte superior */
+        margin-bottom: 20px;
+        height: auto; /* Esto permitirá que el formulario tenga la altura de su contenido */
+        padding-bottom: 50px; /* Añade un espacio al final del contenido del formulario */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), /* Sombra negra */
+                    0 0 10px rgba(200, 0, 0, 0.5); /* Sombra roja */
+    }
+
+
+    /* Puedes ajustar el ancho de los campos del formulario si es necesario */
+    .sub-dashcontent input,
+    .sub-dashcontent select,
+    .sub-dashcontent textarea {
+        border: 2px solid #c9184a; /* Color de borde rojo */
+        background-color: white;
+        padding: 10px;
+        margin-bottom: 15px;
+        width: calc(100% - 22px); /* Ajuste para el padding y el borde */
+        box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+        transition: border-color 0.3s; /* Animación suave al enfocar */
+    }
+
+    /* Si deseas que el botón sea más ancho, ajusta el padding o quita el width */
+    .sub-dashcontent button {
+        background-color: #c9184a; /* Color de fondo del botón */
+        color: white;
+        padding: 20px 35px;
+        border: none;
+        border-radius: 5px; /* Bordes redondeados */
+        transition: background-color 0.3s; /* Animación suave al pasar el mouse */
+        width: 35%; 
+        box-sizing: border-box;
+    }
+
+    .sub-dashcontent button:hover {
+        background-color: #a3143e; /* Color al pasar el mouse */
+    }
+    /* BOTON EN Formularios.html */
+    /* Estilos para el botón */
+    .btn-outline-enviar {
+        padding: 10px 20px; /* Ajusta el relleno según prefieras */
+        border: none; /* Elimina el borde si no es necesario */
+        outline: none; /* Elimina el contorno al hacer clic */
+        background-image: linear-gradient(-45deg, #bb0000, #880000, #000000, #880000, #bb0000);
+        background-size: 200% 100%;
+        background-position: right bottom;
+        transition: background-position 1s;
+        color: white; /* Ajusta el color del texto */
+        border-radius: 25px; /* Ajusta para bordes redondeados */
+        cursor: pointer; /* Cambia el cursor a una mano cuando pasa por encima */
+    }
+
+    .btn-outline-enviar:hover {
+        background-position: left bottom;
+    }
+
+
+    /* Estilos para FORMULARIO COLUMNAS*/
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .form-column {
+        display: flex;
+        flex-direction: column;
+        width: 48%; /* Aproximadamente la mitad del contenedor para que haya espacio entre las columnas */
+    }
+    /* Ajustar la longitud de los campos para que coincidan con los de arriba */
+    .form-column .input-group {
+    max-width: calc(98% - 10px); /* Ajusta este valor para que coincida con el ancho de los campos de una sola columna */
+    }
+
+    .form-field {
+        margin-bottom: 10px; /* Espacio entre cada campo */
+    }
+
+    .form-submit {
+        text-align: center; /* Centra el botón en la fila */
+        width: 100%;
+    }
+
+    /* Puedes agregar un poco de estilo si es necesario */
+    .input-group input {
+        margin: 0 5px; /* Asegura un pequeño espacio entre los inputs */
+    }
+
+    .mb-3_descripcion textarea {
+        width: 100%; /* Toma el ancho completo de su contenedor padre */
+        max-width: 100%; /* Limita el ancho máximo si es necesario */
+        height: 100px; /* Ajusta la altura deseada aquí */
+        max-height: 100px; /* Asegúrate de que no crezca más de la altura establecida */
+    }
+
+    .btn-formulario-leads {
+        width: 80%;
+        margin: 1rem 0;
+    }
+
+    .is-danger {
+        color: red !important;     
+        font-size: small;   
+    }
+
+</style>
+{% endblock %} 
+{% block sb_content %}
+
+<div class="mb-3 text-bold">
+    <h4>Formularios de Leads</h4>
+</div>
+
+<form id="download-form-filtered" method="post">
+    {% csrf_token %} 
+
+    {% if segmentado and "PYCCA" in list_lead_forms %}
+    <button type="submit" name="lead_form_pycca"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        Pycca
+    </button>
+    {% endif %}
+
+    {% if segmentado and "LAICA" in list_lead_forms %}
+    <button type="submit" name="lead_form_laica"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        Laica
+    </button>
+    {% endif %}
+
+    {% if segmentado and "CLARO" in list_lead_forms %}
+    <button type="submit" name="lead_form_claro"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        Claro
+    </button>
+    {% endif %}
+
+    {% if segmentado and "CNT" in list_lead_forms %}
+    <button type="submit" name="lead_form_cnt"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        CNT
+    </button>
+    {% endif %}
+
+    {% if segmentado and "ZURICH" in list_lead_forms %}
+    <button type="submit" name="lead_form_zurich"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        Zurich
+    </button>
+    {% endif %}
+
+    {% if error_message %}
+    <button>{{ error_message }}</button>
+    {% endif %}
+
+    {% if not segmentado %}
+    <button type="submit" name="lead_form_pycca"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        Pycca
+    </button>
+    <button type="submit" name="lead_form_claro"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        Claro
+    </button>
+    <button type="submit" name="lead_form_laica"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        Laica
+    </button>
+    <button type="submit" name="lead_form_zurich"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        Zurich
+    </button>
+    <button type="submit" name="lead_form_cnt"
+        class="btn btn-outline btn-formulario-leads btn-primary bg-primary border border-white">
+        CNT
+    </button>
+    {% endif %}
+    
+</form>
+
+{% endblock %} 
+
+{% block dashcontent %}
+
+<div id="message-container" class="row justify-content-center position-relative w-1/2 h-auto">
+    <div class="col-md-6 position-absolute">         
+        {% if lead_error_message %}
+        <div id="lead-error-msg" class="alert alert-danger d-flex align-items-center   w-100" role="alert">
+            <div class="mx-2">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-exclamation-triangle-fill"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                    />
+                </svg>
+            </div>
+            <div class="text-normal">{{ lead_error_message }}</div>
+        </div>
+        {% endif %}
+        {% if lead_message %}
+        <div id="lead-info-msg" class="alert alert-info d-flex align-items-center  w-100" role="alert">
+            <div class="mx-2">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-exclamation-triangle-fill"
+                    viewBox="0 0 16 16"
+                >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.525 7.466a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.99-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+            </div>
+            <div class="text-normal">{{ lead_message }}</div>
+        </div>
+        {% endif %}
+        {% if lead_success_message %}
+        <div id="lead-success-msg" class="alert alert-success d-flex align-items-center  w-100" role="alert">
+            <div class="mx-2">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-exclamation-triangle-fill"
+                    viewBox="0 0 16 16"
+                >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.525 7.466a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.99-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+            </div>
+            <div class="text-normal">{{ lead_success_message }}</div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="sub-dashcontent">
+
+    <div class="mb-3 text-bold">
+        <h4>Registro de Leads {{ form_leads_id }} </h4>
+    </div>
+    {% include 'components/forms/formulario_leads.html' with leads_form=data_form_leads form_id=form_leads_id %}
+    <button
+        type="submit"
+        name="new_lead_register"
+        {% if error_message %}disabled{% endif %}
+        class="btn btn-outline-enviar btn-primary bg-primary border border-white"
+        form="{{ form_leads_id }}"
+        >
+        Enviar
+    </button>
+</div>
+
+
+<script>
+    window.setTimeout(function() {
+        var alert = document.getElementById('lead-error-msg');
+        if(alert) {
+            alert.style.opacity = '0';
+            window.setTimeout(function() {
+                alert.style.display = 'none';
+            }, 500);
+        }
+    }, 5000);
+
+    window.setTimeout(function() {
+        var alert = document.getElementById('lead-success-msg');
+        if(alert) {
+            alert.style.opacity = '0';
+            window.setTimeout(function() {
+                alert.style.display = 'none';
+            }, 500);
+        }
+    }, 5000);
+    window.setTimeout(function() {
+        var alert = document.getElementById('lead-info-msg');
+        if(alert) {
+            alert.style.opacity = '0';
+            window.setTimeout(function() {
+                alert.style.display = 'none';
+            }, 500);
+        }
+    }, 5000);
+</script>
+
+{% endblock %}
